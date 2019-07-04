@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Save Customer</title>
+	
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Reference Bootstrap files -->
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+   
+</head>
+
+<body>
+
+	<div class="container">
+	
+		<h3>Save Customer</h3>
+		<hr>
+		
+		<p></p>
+	
+		<form action="#" th:action="@{/customers/save}" th:object="${customer}" method="POST">
+		
+			<!-- add hidden form field to handle update -->
+			<input type="hidden" th:field="*{id}" />	
+			 
+			<!-- All input will call customer.get() -->
+			<label for="first_name">First Name</label>
+			<input type="text" th:field="*{firstName}" class="form-control">
+			<p></p>
+			
+			<label for="last_name">Last Name</label>
+			<input type="text" th:field="*{lastName}" class="form-control">
+
+			<p></p>
+			<label for="email">Email</label>
+			<input type="text" th:field="*{email}" class="form-control">
+			
+			<p></p>	
+			<!-- submitting the form will call customer.set() -->	
+			<button type="submit" class="btn btn-info btn-lg col-2">Save</button>
+						
+		</form>
+	
+		<hr>
+		<a th:href="@{/customers/index}">Back to Dashboard</a>
+		
+	</div>
+</body>
+
+</html>
