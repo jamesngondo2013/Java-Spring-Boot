@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Customer Directory</title>
+	<meta charset="ISO-8859-1">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Reference Bootstrap files -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		
+	<!-- EOF CSS INCLUDE -->
+<style>
+.pagination-centered {
+    text-align: center;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.pointer-disabled {
+    pointer-events: none;
+}
+</style>
+
+</head>
+
+<body>
+
+	<h3>Customer Directory</h3>
+	<hr>
+
+	<!-- add button to add new customer -->
+	<a th:href="@{/customers/showFormForAdd}">
+		<button type="button" class="btn btn-primary">New Customer</button>
+	</a>
+
+
+	<div class="form-group pull-right">
+		<input type="text" class="search form-control"
+			placeholder="What you looking for?">
+	</div>
+	<div>
+	<span class="counter pull-right"></span>
+	<table class="table table-hover table-bordered results">
+		<thead>
+			<tr>
+				<th class="col-md-2 col-xs-2">Customer ID</th>
+				<th class="col-md-2 col-xs-2">First Name</th>
+				<th class="col-md-2 col-xs-2">Last Name</th>
+				<th class="col-md-3 col-xs-3">Email</th>
+				<th class="col-md-2 col-xs-2">Action</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+			<!-- tempCustomer = variable, ${customers} = modelAttribute name in controller -->
+			<tr th:each="tempCustomer : ${customers}">
+
+				<td th:text="${tempCustomer.id} " />
+				<td th:text="${tempCustomer.firstName} " />
+				<td th:text="${tempCustomer.lastName} " />
+				<td th:text="${tempCustomer.email} " />
+				<td>
+					<!-- update button --> <a
+					th:href="@{/customers/showFormForUpdate(customerId=${tempCustomer.id})}"
+					class="btn btn-info"> <span class="glyphicon glyphicon-edit"></span>
+						Edit
+				</a> <!-- Delete button --> <a
+					th:href="@{/customers/delete(customerId=${tempCustomer.id})}"
+					class="btn btn-info"
+					onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">
+						<span class="glyphicon glyphicon-trash"></span> Trash
+				</a>
+
+				</td>
+			</tr>
+		</tbody>
+
+	</table>
+	
+	</div>
+	
+	<p></p>
+	<div class="text-center">
+		<!-- customers pagination -->
+		<nav aria-label="Pagination" th:if="${customers.totalPages gt 0}">
+		    <ul class="pagination justify-content-center font-weight-bold">
+		        <li class="page-item" th:classappend="${customers.number eq 0} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/customers/list?page={id}(id=${customers.number lt 2 ? 1 : customers.number})}"
+		               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		        <li class="page-item" th:classappend="${i eq customers.number + 1} ? 'active'"
+		            th:each="i : ${#numbers.sequence( 1, customers.totalPages, 1)}">
+		            <a class="page-link" th:href="@{/customers/list?page={id}(id=${i})}" th:text="${i}"
+		               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+		        </li>
+		        <li class="page-item" th:classappend="${customers.number + 1 eq customers.totalPages} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/customers/list?page={id}(id=${customers.number + 2})}"
+		               aria-label="Next" title="Next Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		    </ul>
+		</nav>	
+	</div>
+
+</body>
+
+</html>
