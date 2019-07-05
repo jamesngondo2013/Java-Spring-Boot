@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org">
+    <head>
+        <title>Welcome to Spring Security Thymeleaf tutorial</title>
+    </head>
+    <body>
+    
+    	 <div sec:authorize="isAuthenticated()">
+            <h1>Welcome To Security Protected Home Page</h1>
+        </div>
+       
+        
+         <div class="starter-template">
+
+        	<h1 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]!</h1>
+       
+
+    	</div>
+    	
+       
+        <div sec:authorize="hasRole('ADMIN')">
+    		This will only be displayed if authenticated user has role ROLE_ADMIN.
+		</div>
+        
+        <div sec:authorize="hasRole('EMPLOYEE')">Text visible to EVERY EMPLOYEE.</div>
+        
+         <div sec:authorize="hasRole('MANAGER')">Text visible to MANAGER ONLY.</div>
+         
+       <div sec:authorize="hasRole('CEO')">Text visible to CEO MANAGER ONLY.</div>
+        
+        Authenticated username: <div sec:authentication="name"></div>
+        
+        Authenticated user roles:  <div sec:authentication="principal.authorities"></div>
+       
+         <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+        
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
