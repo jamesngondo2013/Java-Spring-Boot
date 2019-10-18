@@ -1,2 +1,2 @@
 # Java-Spring-Boot
-## Hibernate, JPA, Spring Data 
+## Hibernate, JPA, Spring Data, Thymleaf
